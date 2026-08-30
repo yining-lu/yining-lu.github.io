@@ -3,7 +3,6 @@ title: "Re-centering the Patient? Exploring the Impact of Health Chatbots' Patie
 area: "Others"
 status: "Submitting"
 citation: "Zou, X., Lu, Y., Xu, Y., & Chen, S.* (Submitting)."
-summary: "Patient-centered care is widely advocated for intelligent health systems, but what does it actually consist of — and does it keep people using the system? Two studies conceptualize health chatbots' patient-centered orientation and test how it shapes continuance intention."
 images:
   - "/images/research-chatbot-cfa.webp"
   - "/images/research-chatbot-model.webp"

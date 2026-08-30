@@ -3,7 +3,6 @@ title: "The Power of Disconnection: A Longitudinal Study of Adolescents' Mobile 
 area: "Children, Adolescents, and Media"
 status: "Under Review"
 citation: "Liu, J., Chen, S., & Lu, Y.* (Under Review). Extended abstract submitted to Mobile Media & Communication, Special Issue on Mobile Disconnection."
-summary: "Three-wave longitudinal data from 1,753 adolescents reframe disconnection as an active self-regulatory practice rather than mere reduction of use. Competence need satisfaction — not autonomy or relatedness — is the mechanism linking voluntary disconnection to psychological resilience."
 images:
   - "/images/research-disconnection-resilience.webp"
 order: 2

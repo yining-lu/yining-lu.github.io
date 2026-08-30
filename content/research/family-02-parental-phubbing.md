@@ -3,7 +3,6 @@ title: "Parental Phubbing in Family Communication: Longitudinal Relationships be
 area: "Family Communication"
 status: "NCA 2026"
 citation: "Liu, J., & Lu, Y. (2026, Nov). To be presented at the Annual National Communication Association (NCA) Conference, New Orleans, U.S."
-summary: "Three waves of data from 1,753 Chinese adolescents, analyzed with a random-intercept cross-lagged panel model. Between families, parental phubbing tracks lower closeness and well-being — but within families over time, it is adolescents' well-being that predicts later parental phubbing."
 images:
   - "/images/research-phubbing-father.webp"
   - "/images/research-phubbing-mother.webp"

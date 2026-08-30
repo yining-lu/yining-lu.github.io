@@ -3,7 +3,6 @@ title: "Digital Inequality in Everyday Smartphone Practice: An Experience Sampli
 area: "Interpersonal Communication"
 status: "In Preparation"
 citation: "Manuscript in preparation (target journal: New Media & Society)."
-summary: "An experience sampling study capturing phubbing, distraction, and guilt as they unfold in everyday face-to-face interaction — framed as a question of digital inequality rather than individual self-control."
 images:
   - "/images/research-digital-inequality.webp"
 order: 1

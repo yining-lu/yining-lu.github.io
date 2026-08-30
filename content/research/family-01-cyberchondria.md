@@ -3,7 +3,6 @@ title: "From Parental Clicks to Children's Minds: Tracing the Digital Shadow of 
 area: "Family Communication"
 status: "ICA 2025"
 citation: "Lu, Y., Wang, M., & Wang, K. (2025, Apr). Presented at the Annual International Communication Association (ICA) Conference, Denver, U.S."
-summary: "Health risks can travel across people. Parents' repetitive online searching about their child's health predicts more negative parental assessments of the child's physical health, which shapes the child's own self-assessment and, in turn, their mental health."
 images:
   - "/images/research-cyberchondria.webp"
 order: 1

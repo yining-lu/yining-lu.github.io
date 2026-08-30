@@ -3,7 +3,6 @@ title: "The Interplay of Digital Disconnection, Digital Literacy, and Parental A
 area: "Children, Adolescents, and Media"
 status: "Under Review"
 citation: "Liu, J., Lu, Y., & Chen, S.* (Under Review). Health Communication, Special Issue on Digital Mental Health."
-summary: "Two-wave longitudinal data from 1,615 adolescents show that digital disconnection has no overall association with later mental health. Its benefits are conditional: digital literacy and parental active mediation determine who actually gains from stepping away."
 images:
   - "/images/research-disconnection-literacy.webp"
 order: 1

@@ -9,6 +9,21 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
+
+// 折叠时显示的文字：默认直接取正文开头，由 CSS 截断成三行并自动加省略号。
+// 如果 frontmatter 里写了 summary，就用 summary 覆盖。
+function plainText(md: string) {
+  return md
+    .replace(/<!--[\s\S]*?-->/g, ' ') // HTML 注释
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ') // 图片
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // 链接保留文字
+    .replace(/[*_`#>]/g, '') // 强调、标题符号
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const preview = d.summary ?? plainText(entry.body ?? '').slice(0, 400);
+const figClass = d.images.length > 1 ? 'pub-figs pub-figs-2' : 'pub-figs';
 ---
 
 <details class="pub">
@@ -18,10 +33,12 @@ const d = entry.data;
       <span class="pub-title">{d.title}</span>
       {d.status && <span class="pub-status">{d.status}</span>}
       {d.citation && <span class="pub-meta">{d.citation}</span>}
-      <span class="pub-preview">{d.summary}</span>
+      <span class="pub-preview">{preview}</span>
+
+      {/* 折叠时的配图预览，展开后由 CSS 隐藏，改由下方正文后的配图接替 */}
       {
         d.images.length > 0 && (
-          <span class={d.images.length > 1 ? 'pub-figs pub-figs-2' : 'pub-figs'}>
+          <span class={`${figClass} pub-figs-peek`}>
             {d.images.map((src) => (
               <img class="pub-thumb" src={src} alt={d.title} loading="lazy" />
             ))}
@@ -35,6 +52,18 @@ const d = entry.data;
     <div class="prose">
       <Content />
     </div>
+
+    {/* 展开后配图排在正文下面 */}
+    {
+      d.images.length > 0 && (
+        <div class={figClass}>
+          {d.images.map((src) => (
+            <img class="pub-thumb" src={src} alt={d.title} loading="lazy" />
+          ))}
+        </div>
+      )
+    }
+
     {
       d.links.length > 0 && (
         <div class="pub-links">
