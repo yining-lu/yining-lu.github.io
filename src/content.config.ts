@@ -12,9 +12,6 @@ const research = defineCollection({
     title: z.string(),
     // 属于哪个板块。必须和 site.config.ts 里 researchAreas 的名字完全一致
     area: z.string(),
-    // 选填。折叠时默认直接显示正文开头（自动截断成三行并加省略号）。
-    // 只有想用别的文字代替正文开头时，才需要写这一行。
-    summary: z.string().optional(),
     // 引用信息，显示在标题下方
     citation: z.string().optional(),
     // 状态标签，例如 "Under Review" / "In Preparation" / "ICA 2025"

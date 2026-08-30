@@ -176,13 +176,7 @@ h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; margin-bott
   margin-top: 8px; letter-spacing: 0.01em; display: block; line-height: 1.55;
 }
 .pub-meta .venue { color: var(--purple); }
-.pub-preview {
-  margin-top: 10px; color: var(--ink-soft); font-size: 0.95rem;
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.pub[open] .pub-preview { display: none; }
-.pub-figs { display: block; margin-top: 14px; }
+.pub-figs { display: block; margin-top: 16px; }
 .pub-figs-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 /* 展开后隐藏折叠态的配图，改由正文下方的配图接替 */
 .pub[open] .pub-figs-peek { display: none; }
