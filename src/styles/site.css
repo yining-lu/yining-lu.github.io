@@ -14,6 +14,10 @@
   --purple: #660874;
   --purple-soft: #f5eaf7;
   --purple-line: #e2cde7;
+  /* 页眉圆形徽标的描边 */
+  --purple-ring: #b6a0c2;
+  /* 徽标下面那道浅绿色小横线 */
+  --sage: #bcc6ab;
 
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
   --serif: "Fraunces", Georgia, "Songti SC", serif;
@@ -49,34 +53,59 @@ img { max-width: 100%; display: block; }
 
 /* ---------- 顶部导航 ---------- */
 nav {
+  --nav-pad-y: 10px;
   position: sticky; top: 0; z-index: 50;
-  background: rgba(251, 250, 247, 0.92);
+  background: rgba(250, 248, 251, 0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--rule);
 }
 .nav-inner {
-  max-width: 880px; margin: 0 auto; padding: 14px 24px;
+  max-width: 880px; margin: 0 auto; padding: var(--nav-pad-y) 24px;
   display: flex; align-items: center; justify-content: space-between;
   gap: 16px; flex-wrap: wrap;
 }
+/* 左上角：圆形首字母徽标 + 姓名 */
+.nav-brand { display: flex; align-items: center; gap: 14px; }
+.nav-brand:hover { text-decoration: none; }
+.nav-mark {
+  position: relative; flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid var(--purple-ring);
+  font-family: var(--serif); font-size: 1.6rem; font-weight: 400;
+  color: var(--purple); letter-spacing: -0.02em; line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+}
+/* 徽标下方的浅绿短线，正好压在页眉底边上 */
+.nav-mark::after {
+  content: ''; position: absolute; left: 0; right: 0;
+  bottom: calc(-1 * var(--nav-pad-y)); height: 2px;
+  background: var(--sage);
+}
+.nav-brand:hover .nav-mark { background: var(--purple-soft); border-color: var(--purple); }
 .nav-name {
   font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
   color: var(--ink); letter-spacing: 0.01em;
+  transition: color 0.15s;
 }
-.nav-name:hover { text-decoration: none; color: var(--purple); }
-.nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+.nav-brand:hover .nav-name { color: var(--purple); }
+.nav-links { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .nav-links a {
   font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--muted);
+  padding: 9px 16px; border-radius: 8px; line-height: 1.15;
+  transition: background 0.15s, color 0.15s;
 }
-.nav-links a:hover { color: var(--purple); text-decoration: none; }
-.nav-links a[aria-current="page"] { color: var(--purple); }
+.nav-links a:hover {
+  color: var(--purple); background: var(--purple-soft); text-decoration: none;
+}
+.nav-links a[aria-current="page"] { color: var(--purple); background: var(--purple-soft); }
 
 /* ---------- 首页顶部 ---------- */
 header.hero { padding: 72px 0 56px; border-bottom: 1px solid var(--rule); }
 .hero-grid {
-  display: grid; grid-template-columns: 220px 1fr;
-  gap: 44px; align-items: center;
+  display: grid; grid-template-columns: 220px 1fr auto;
+  gap: 46px; align-items: center;
 }
 /* 竖版长方形头像，比例跟原图一致（2:3）*/
 .portrait {
@@ -93,10 +122,28 @@ h1 {
   font-family: var(--serif); font-size: 3rem; font-weight: 500;
   line-height: 1.1; letter-spacing: -0.01em;
 }
-.hero-title { margin-top: 14px; color: var(--muted); font-size: 1.05rem; line-height: 1.5; }
-.hero-title a { color: var(--muted); border-bottom: 1px solid var(--purple-line); }
-.hero-title a:hover { color: var(--purple); text-decoration: none; }
-.hero-links { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-role { margin-top: 22px; font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+.hero-affil { margin-top: 5px; color: var(--muted); font-size: 1.02rem; line-height: 1.5; }
+.hero-affil a { color: var(--muted); border-bottom: 1px solid var(--purple-line); }
+.hero-affil a:hover { color: var(--purple); text-decoration: none; }
+.hero-email { margin-top: 15px; font-size: 1rem; color: var(--purple); }
+.hero-email a { border-bottom: 1px solid var(--purple-line); }
+.hero-email a:hover { text-decoration: none; background: var(--purple-soft); }
+
+/* 右侧竖排的研究兴趣 */
+.hero-tags {
+  border-left: 1px solid var(--rule);
+  padding-left: 34px;
+  display: flex; flex-direction: column; gap: 17px;
+}
+.hero-tag {
+  font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.11em;
+  text-transform: uppercase; color: var(--purple); white-space: nowrap;
+}
+.hero-tag:first-child { padding-top: 14px; border-top: 1px solid var(--purple-line); }
+.hero-tag:last-child { padding-bottom: 14px; border-bottom: 1px solid var(--purple-line); }
+
+/* .pill 仍用于 CV 页的下载按钮 */
 .pill {
   font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.04em;
   padding: 7px 15px; border: 1px solid var(--purple-line); border-radius: 999px;
@@ -335,8 +382,15 @@ footer .mono { font-family: var(--mono); font-size: 0.75rem; }
   body { font-size: 16px; }
   h1 { font-size: 2.2rem; }
   .page-head h1 { font-size: 1.9rem; }
-  .hero-grid { grid-template-columns: 1fr; gap: 28px; justify-items: start; }
+  .hero-grid { grid-template-columns: 1fr; gap: 26px; justify-items: start; }
   .portrait { width: 170px; }
+  /* 手机上研究兴趣改为横排，去掉竖线 */
+  .hero-tags {
+    border-left: none; padding-left: 0;
+    flex-direction: row; flex-wrap: wrap; gap: 8px 18px;
+  }
+  .hero-tag:first-child { padding-top: 0; border-top: none; }
+  .hero-tag:last-child { padding-bottom: 0; border-bottom: none; }
   .contact-grid { grid-template-columns: 1fr; gap: 28px; }
   .contact-photo { max-width: 260px; }
   .questions { grid-template-columns: 1fr; }
@@ -346,7 +400,12 @@ footer .mono { font-family: var(--mono); font-size: 0.75rem; }
   .pdf-cover { max-height: 240px; }
   .edu-item { flex-direction: column; gap: 2px; }
   .edu-years { min-width: 0; }
-  .nav-links { gap: 14px; }
-  .nav-inner { padding: 12px 20px; }
+  .nav-links { gap: 4px; }
+  .nav-links a { padding: 7px 10px; }
+  .nav-inner { padding: var(--nav-pad-y) 18px; }
+  .nav-brand { gap: 10px; }
+  .nav-mark { width: 34px; height: 34px; font-size: 1.35rem; }
+  /* 手机上导航会换行，绿线就不再贴着底边了，直接隐藏 */
+  .nav-mark::after { display: none; }
   section { padding: 44px 0; }
 }

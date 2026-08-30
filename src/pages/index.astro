@@ -27,15 +27,30 @@ const featuredTeaching = teaching.slice(0, 2);
 <Base>
   <header class="hero" id="top">
     <div class="wrap hero-grid">
-      <img class="portrait" src={site.portrait} alt={site.name} width="720" height="1080" />
-      <div>
-        {site.eyebrow && <p class="eyebrow">{site.eyebrow}</p>}
+      <img class="portrait" src={site.portrait} alt={site.name} width="760" height="1140" />
+
+      <div class="hero-main">
         <h1>{site.name}</h1>
-        <p class="hero-title" set:html={site.title} />
-        <div class="hero-links">
-          {site.pills.map((p) => <a class="pill" href={p.url}>{p.label}</a>)}
-        </div>
+        <p class="hero-role">{site.role}</p>
+        <p class="hero-affil" set:html={site.affiliation} />
+        {
+          site.heroEmail && (
+            <p class="hero-email">
+              Email: <a href={`mailto:${site.heroEmail}`}>{site.heroEmail}</a>
+            </p>
+          )
+        }
       </div>
+
+      {
+        site.interests?.length > 0 && (
+          <aside class="hero-tags">
+            {site.interests.map((tag) => (
+              <span class="hero-tag">{tag}</span>
+            ))}
+          </aside>
+        )
+      }
     </div>
   </header>
 

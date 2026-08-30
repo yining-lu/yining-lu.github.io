@@ -18,20 +18,18 @@ export const site = {
   // 首页照片：把图片放进 public/images/，这里写文件名
   portrait: '/images/portrait.jpg',
 
-  // 首页大标题下面那行小字（不需要就设为空字符串 ''）
-  eyebrow: 'Media Psychology · Family Communication · Digital Well-being',
+  // 首页名字下面的身份（粗体那行）
+  role: 'Master Student in Communication Science',
 
-  // 头衔。可以写 HTML，<a> 就是超链接。
-  title: `Master Student in Communication Science<br>
-          School of Journalism &amp; Communication,
-          <a href="https://www.tsinghua.edu.cn/en/">Tsinghua University</a>`,
+  // 学院 / 学校。可以写 HTML，<a> 就是超链接。
+  affiliation: `School of Journalism &amp; Communication,<br>
+                <a href="https://www.tsinghua.edu.cn/en/">Tsinghua University</a>`,
 
-  // 首页头衔下面那排小圆胶囊按钮。不要的整行删掉，要加就照格式复制一行。
-  pills: [
-    { label: 'Email', url: 'mailto:luyining0529@gmail.com' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/yining-lu-63a9b92aa/' },
-    { label: 'CV (PDF)', url: '/cv.pdf' },
-  ],
+  // 首页显示的联系邮箱
+  heroEmail: 'luyn24@mails.tsinghua.edu.cn',
+
+  // 首页右侧竖排的研究兴趣。增删改直接改这个列表。
+  interests: ['Media Psychology', 'Family Communication', 'Digital Well-being'],
 
   // 教育背景，显示在首页 About 上方的小卡片里
   education: [
