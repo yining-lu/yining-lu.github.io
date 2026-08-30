@@ -110,6 +110,13 @@ const featuredTeaching = teaching.slice(0, 2);
       <div class="contact-lines">
         <p>Email me at <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
         <p>Connect me on <a href={site.contact.linkedin}>LinkedIn</a></p>
+        {
+          site.contact.researchgate && (
+            <p>
+              Connect me on <a href={site.contact.researchgate}>ResearchGate</a>
+            </p>
+          )
+        }
       </div>
     </div>
   </section>
