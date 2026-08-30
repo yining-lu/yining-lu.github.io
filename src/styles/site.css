@@ -249,7 +249,7 @@ section.area { padding: 48px 0; }
   background: var(--card); overflow: hidden; transition: border-color 0.15s;
 }
 .pdf-card[open], .pdf-card:hover { border-color: var(--purple-line); }
-.pdf-card summary {
+.pdf-card summary, .pdf-card-inner {
   list-style: none; cursor: pointer; padding: 16px 18px;
   display: flex; gap: 12px; align-items: flex-start;
 }
@@ -280,7 +280,8 @@ section.area { padding: 48px 0; }
   object-fit: cover; object-position: top center;
   display: block; transition: transform 0.25s ease;
 }
-.pdf-card summary:hover .pdf-cover { transform: scale(1.012); }
+.pdf-card summary:hover .pdf-cover,
+.pdf-card-link:hover .pdf-cover { transform: scale(1.012); }
 .pdf-cover-wrap::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 88px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--card));
@@ -294,8 +295,14 @@ section.area { padding: 48px 0; }
   border: 1px solid var(--purple-line); background: var(--card);
   color: var(--purple); transition: background 0.15s, color 0.15s;
 }
-.pdf-card summary:hover .pdf-cover-hint { background: var(--purple); color: #fff; }
+.pdf-card summary:hover .pdf-cover-hint,
+.pdf-card-link:hover .pdf-cover-hint { background: var(--purple); color: #fff; }
 .pdf-card[open] .pdf-cover-wrap { display: none; }
+
+/* 手机浏览器内嵌 PDF 只能显示第一页，所以 JS 会把整张卡片换成链接，
+   点一下直接用系统自带的 PDF 阅读器打开 */
+a.pdf-card-link { display: block; color: inherit; }
+a.pdf-card-link:hover { text-decoration: none; }
 
 .pdf-card-body { padding: 0 18px 18px 18px; }
 .pdf-card-body .pdf-fallback { margin-top: 10px; font-size: 0.8rem; }

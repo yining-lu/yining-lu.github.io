@@ -28,7 +28,7 @@ const {
 const meta = ['PDF', pages ? `${pages} ${unit}` : null].filter(Boolean).join(' · ');
 ---
 
-<details class="pdf-card" open={open}>
+<details class="pdf-card" open={open} data-file={file}>
   <summary>
     <span class="pdf-card-toggle">+</span>
     <span class="pdf-card-head">
@@ -43,7 +43,7 @@ const meta = ['PDF', pages ? `${pages} ${unit}` : null].filter(Boolean).join(' �
               alt={`${label} — first page`}
               loading="lazy"
             />
-            <span class="pdf-cover-hint">Click to read inline →</span>
+            <span class="pdf-cover-hint">Read inline →</span>
           </span>
         )
       }
@@ -61,6 +61,15 @@ const meta = ['PDF', pages ? `${pages} ${unit}` : null].filter(Boolean).join(' �
 </details>
 
 <script>
+  // 手机浏览器（iOS Safari、安卓 Chrome）内嵌 PDF 只会渲染第一页，不能翻页，
+  // 所以这种情况下不展开，直接用系统自带的 PDF 阅读器打开。
+  const canEmbedPdf = () => {
+    // 标准检测：浏览器是否自带内置 PDF 阅读器
+    if (navigator.pdfViewerEnabled === false) return false;
+    // 触屏为主的设备（手机 / iPad）一律当作不支持
+    return !window.matchMedia('(pointer: coarse)').matches;
+  };
+
   // 展开时才把 data-src 写进 src；默认展开的卡片在页面加载后立即填上。
   const loadFrame = (el: HTMLDetailsElement) => {
     const frame = el.querySelector<HTMLIFrameElement>('iframe[data-src]');
@@ -69,7 +78,40 @@ const meta = ['PDF', pages ? `${pages} ${unit}` : null].filter(Boolean).join(' �
     frame.removeAttribute('data-src');
   };
 
+  // 把整张卡片换成一个真正的链接，手机上可以长按分享 / 新标签页打开
+  const toLinkCard = (el: HTMLDetailsElement, file: string) => {
+    const summary = el.querySelector('summary');
+    if (!summary) return;
+
+    const link = document.createElement('a');
+    link.className = 'pdf-card pdf-card-link';
+    link.href = file;
+    link.target = '_blank';
+    link.rel = 'noopener';
+
+    const inner = document.createElement('span');
+    inner.className = 'pdf-card-inner';
+    while (summary.firstChild) inner.appendChild(summary.firstChild);
+    link.appendChild(inner);
+
+    const toggle = link.querySelector('.pdf-card-toggle');
+    if (toggle) toggle.textContent = '↗';
+    const hint = link.querySelector('.pdf-cover-hint');
+    if (hint) hint.textContent = 'Open PDF ↗';
+
+    el.replaceWith(link);
+  };
+
+  const embeddable = canEmbedPdf();
+
   document.querySelectorAll<HTMLDetailsElement>('details.pdf-card').forEach((el) => {
+    const file = el.dataset.file;
+
+    if (!embeddable && file) {
+      toLinkCard(el, file);
+      return;
+    }
+
     if (el.open) loadFrame(el);
     el.addEventListener('toggle', () => {
       if (el.open) loadFrame(el);
