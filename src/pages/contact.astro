@@ -31,6 +31,13 @@ import { site } from '../../site.config';
         <p>
           Connect me on <a href={site.contact.linkedin}>LinkedIn</a>
         </p>
+        {
+          site.contact.researchgate && (
+            <p>
+              Connect me on <a href={site.contact.researchgate}>ResearchGate</a>
+            </p>
+          )
+        }
       </div>
     </div>
   </section>

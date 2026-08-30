@@ -91,6 +91,8 @@ export const site = {
     // 学校邮箱，不想显示就把下面这行删掉
     academicEmail: 'luyn24@mails.tsinghua.edu.cn',
     linkedin: 'https://www.linkedin.com/in/yining-lu-63a9b92aa/',
+    // ResearchGate 主页，不想显示就把下面这行删掉
+    researchgate: 'https://www.researchgate.net/profile/Yining-Lu-6/research',
   },
 
   // CV 的 PDF 文件位置（文件放在 public/ 下面）
