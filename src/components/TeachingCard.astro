@@ -1,0 +1,23 @@
+---
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'teaching'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const code = [d.code, d.role].filter(Boolean).join(' · ');
+---
+
+<div class="course">
+  {code && <div class="course-code">{code}</div>}
+  <h3>{d.title}</h3>
+  {d.institution && <p class="pub-meta">{d.institution}</p>}
+  <div class="prose">
+    <Content />
+  </div>
+</div>

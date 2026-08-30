@@ -1,0 +1,13 @@
+# 构建产物和依赖，不需要提交
+dist/
+node_modules/
+.astro/
+
+# 系统 / 编辑器
+.DS_Store
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+.env
+.env.production

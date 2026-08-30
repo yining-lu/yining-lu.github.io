@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ResearchCard from '../components/ResearchCard.astro';
+import TeachingCard from '../components/TeachingCard.astro';
+import { site } from '../../site.config';
+
+// About 正文直接来自 content/about.md
+import { Content as AboutText } from '../../content/about.md';
+
+const research = (await getCollection('research')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const teaching = (await getCollection('teaching')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// 首页只展示前 3 个研究、前 2 门课
+const featuredResearch = research.slice(0, 3);
+const featuredTeaching = teaching.slice(0, 2);
+---
+
+<Base>
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <img class="portrait" src={site.portrait} alt={site.name} />
+      <div>
+        {site.eyebrow && <p class="eyebrow">{site.eyebrow}</p>}
+        <h1>{site.name}</h1>
+        <p class="hero-title" set:html={site.title} />
+        <div class="hero-links">
+          {site.pills.map((p) => <a class="pill" href={p.url}>{p.label}</a>)}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About</h2>
+      <p class="section-note">Background &amp; Interests</p>
+      <div class="prose">
+        <AboutText />
+      </div>
+
+      {
+        site.education?.length > 0 && (
+          <div class="edu-list">
+            {site.education.map((e) => (
+              <div class="edu-item">
+                <span class="edu-years">{e.years}</span>
+                <span>
+                  <strong>{e.school}</strong>
+                  <span class="edu-degree">{e.degree}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    research.length > 0 && (
+      <section id="research">
+        <div class="wrap">
+          <h2>Research</h2>
+          <p class="section-note">Selected Projects</p>
+          {featuredResearch.map((entry) => (
+            <ResearchCard entry={entry} />
+          ))}
+          {research.length > featuredResearch.length && (
+            <a class="see-all" href="/research/">
+              See all research →
+            </a>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    teaching.length > 0 && (
+      <section id="teaching">
+        <div class="wrap">
+          <h2>Teaching</h2>
+          <p class="section-note">Courses</p>
+          {featuredTeaching.map((entry) => (
+            <TeachingCard entry={entry} />
+          ))}
+          {teaching.length > featuredTeaching.length && (
+            <a class="see-all" href="/teaching/">
+              See all teaching →
+            </a>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <section id="contact-preview">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="section-note">Get in touch</p>
+      <div class="contact-lines">
+        <p>Email me at <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
+        <p>Connect me on <a href={site.contact.linkedin}>LinkedIn</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TeachingCard from '../components/TeachingCard.astro';
+
+const teaching = (await getCollection('teaching')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title="Teaching" description="Teaching experience of Yining Lu.">
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Teaching</p>
+      <h1>Teaching</h1>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      {teaching.map((entry) => <TeachingCard entry={entry} />)}
+      {teaching.length === 0 && <p class="section-note">Coming soon.</p>}
+    </div>
+  </section>
+</Base>
