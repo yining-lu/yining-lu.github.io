@@ -75,14 +75,15 @@ nav {
 /* ---------- 首页顶部 ---------- */
 header.hero { padding: 72px 0 56px; border-bottom: 1px solid var(--rule); }
 .hero-grid {
-  display: grid; grid-template-columns: 180px 1fr;
+  display: grid; grid-template-columns: 220px 1fr;
   gap: 44px; align-items: center;
 }
+/* 竖版长方形头像，比例跟原图一致（2:3）*/
 .portrait {
-  width: 180px; height: 180px; border-radius: 50%;
-  object-fit: cover;
+  width: 220px; height: auto; aspect-ratio: 2 / 3;
+  object-fit: cover; border-radius: 10px;
+  border: 1px solid var(--rule);
   background: linear-gradient(135deg, var(--purple) 0%, #9c3fae 100%);
-  box-shadow: 0 0 0 6px var(--paper), 0 0 0 7px var(--purple-line);
 }
 .eyebrow {
   font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
@@ -183,6 +184,9 @@ h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; margin-bott
 .pub[open] .pub-preview { display: none; }
 .pub-figs { display: block; margin-top: 14px; }
 .pub-figs-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+/* 展开后隐藏折叠态的配图，改由正文下方的配图接替 */
+.pub[open] .pub-figs-peek { display: none; }
+.pub-body .pub-figs { margin-top: 18px; }
 .pub-thumb {
   width: 100%; object-fit: contain;
   background: #fff; padding: 10px;
@@ -338,7 +342,7 @@ footer .mono { font-family: var(--mono); font-size: 0.75rem; }
   h1 { font-size: 2.2rem; }
   .page-head h1 { font-size: 1.9rem; }
   .hero-grid { grid-template-columns: 1fr; gap: 28px; justify-items: start; }
-  .portrait { width: 140px; height: 140px; }
+  .portrait { width: 170px; }
   .contact-grid { grid-template-columns: 1fr; gap: 28px; }
   .contact-photo { max-width: 260px; }
   .questions { grid-template-columns: 1fr; }
