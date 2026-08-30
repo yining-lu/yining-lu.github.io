@@ -159,13 +159,20 @@ h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; margin-bott
   flex-shrink: 0; transition: transform 0.2s; line-height: 1.5;
 }
 .pub[open] .pub-toggle { transform: rotate(45deg); }
+.pub-head { display: block; min-width: 0; }
 .pub-title {
   font-family: var(--serif); font-size: 1.12rem;
   font-weight: 600; line-height: 1.4; display: block;
 }
+.pub-status {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--purple);
+  background: var(--purple-soft); padding: 3px 9px; border-radius: 999px;
+}
 .pub-meta {
-  font-family: var(--mono); font-size: 0.74rem; color: var(--muted);
-  margin-top: 6px; letter-spacing: 0.02em; display: block;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--muted);
+  margin-top: 8px; letter-spacing: 0.01em; display: block; line-height: 1.55;
 }
 .pub-meta .venue { color: var(--purple); }
 .pub-preview {
@@ -174,10 +181,15 @@ h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; margin-bott
   overflow: hidden;
 }
 .pub[open] .pub-preview { display: none; }
+.pub-figs { display: block; margin-top: 14px; }
+.pub-figs-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .pub-thumb {
-  width: 100%; max-height: 260px; object-fit: cover;
-  border-radius: 8px; margin-top: 14px; border: 1px solid var(--rule);
+  width: 100%; object-fit: contain;
+  background: #fff; padding: 10px;
+  border-radius: 8px; border: 1px solid var(--rule);
 }
+.pub-figs > .pub-thumb + .pub-thumb { margin-top: 10px; }
+.pub-figs-2 > .pub-thumb + .pub-thumb { margin-top: 0; }
 .pub-body { padding: 0 24px 22px 24px; }
 .pub-body .prose { font-size: 0.97rem; }
 .pub-abstract {
@@ -197,23 +209,27 @@ h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; margin-bott
   font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em;
 }
 
-/* ---------- 发表列表（由 content/publications.md 渲染） ---------- */
-.pubs-md h2 {
-  font-family: var(--serif); font-size: 1.25rem; font-weight: 600;
-  margin: 36px 0 4px; padding-bottom: 8px;
-  border-bottom: 2px solid var(--purple); display: inline-block;
+/* ---------- Research 板块标题 ---------- */
+section.area { padding: 48px 0; }
+.area-title {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 600;
+  padding-bottom: 10px; border-bottom: 2px solid var(--purple);
+  display: inline-block; margin-bottom: 26px;
 }
-.pubs-md h2:first-child { margin-top: 0; }
-.pubs-md ul { list-style: none; margin: 10px 0 0; padding: 0; }
-.pubs-md li {
-  padding: 14px 0; border-bottom: 1px solid var(--rule);
-  font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft);
+
+/* ---------- Research 页顶部的两个问题 ---------- */
+.questions {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px;
 }
-.pubs-md li:last-child { border-bottom: none; }
-.pubs-md li strong { color: var(--ink); font-weight: 600; }
-.pubs-md li em { color: var(--purple); font-style: normal; }
-.pubs-md li a { border-bottom: 1px solid var(--purple-line); }
-.pubs-md li a:hover { text-decoration: none; background: var(--purple-soft); }
+.question {
+  background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 18px 20px; border-top: 3px solid var(--purple);
+}
+.question-q {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
+  color: var(--ink); margin: 0 0 6px;
+}
+.question-a { font-size: 0.94rem; color: var(--muted); margin: 0; }
 
 /* ---------- 教学卡片 ---------- */
 .course {
@@ -227,13 +243,69 @@ h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 500; margin-bott
 .course h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
 .course .prose { font-size: 0.95rem; color: var(--muted); }
 
-/* ---------- CV 页 PDF ---------- */
-.pdf-frame {
-  width: 100%; height: 82vh; min-height: 520px;
-  border: 1px solid var(--rule); border-radius: 10px;
-  background: var(--card); margin-top: 24px;
+/* ---------- PDF 预览卡片（Teaching 课件 + CV 通用） ---------- */
+.pdf-card {
+  margin-top: 18px; border: 1px solid var(--rule); border-radius: 10px;
+  background: var(--card); overflow: hidden; transition: border-color 0.15s;
 }
-.pdf-fallback { margin-top: 14px; font-size: 0.9rem; color: var(--muted); }
+.pdf-card[open], .pdf-card:hover { border-color: var(--purple-line); }
+.pdf-card summary {
+  list-style: none; cursor: pointer; padding: 16px 18px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.pdf-card summary::-webkit-details-marker { display: none; }
+.pdf-card-toggle {
+  font-family: var(--mono); color: var(--purple); font-size: 0.95rem;
+  flex-shrink: 0; transition: transform 0.2s; line-height: 1.4;
+}
+.pdf-card[open] .pdf-card-toggle { transform: rotate(45deg); }
+.pdf-card-head { min-width: 0; flex: 1; }
+.pdf-card-title {
+  font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
+  color: var(--ink); display: block; line-height: 1.4;
+}
+.pdf-card-meta {
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block;
+}
+
+/* 封面缩略图：只露出第一页顶部，底部渐隐暗示还有后续内容 */
+.pdf-cover-wrap {
+  position: relative; display: block; margin-top: 14px;
+  border: 1px solid var(--rule); border-radius: 8px;
+  overflow: hidden; background: var(--paper);
+}
+.pdf-cover {
+  width: 100%; max-height: 340px;
+  object-fit: cover; object-position: top center;
+  display: block; transition: transform 0.25s ease;
+}
+.pdf-card summary:hover .pdf-cover { transform: scale(1.012); }
+.pdf-cover-wrap::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 88px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--card));
+  pointer-events: none;
+}
+.pdf-cover-hint {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  z-index: 1; white-space: nowrap;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
+  padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--purple-line); background: var(--card);
+  color: var(--purple); transition: background 0.15s, color 0.15s;
+}
+.pdf-card summary:hover .pdf-cover-hint { background: var(--purple); color: #fff; }
+.pdf-card[open] .pdf-cover-wrap { display: none; }
+
+.pdf-card-body { padding: 0 18px 18px 18px; }
+.pdf-card-body .pdf-fallback { margin-top: 10px; font-size: 0.8rem; }
+.pdf-fallback a { border-bottom: 1px solid var(--purple-line); }
+.pdf-frame {
+  width: 100%; height: 78vh; min-height: 460px;
+  border: 1px solid var(--rule); border-radius: 8px;
+  background: var(--paper);
+}
+.pdf-fallback { font-size: 0.9rem; color: var(--muted); }
 
 /* ---------- Contact 页 ---------- */
 .contact-grid {
@@ -262,6 +334,11 @@ footer .mono { font-family: var(--mono); font-size: 0.75rem; }
   .portrait { width: 140px; height: 140px; }
   .contact-grid { grid-template-columns: 1fr; gap: 28px; }
   .contact-photo { max-width: 260px; }
+  .questions { grid-template-columns: 1fr; }
+  .pub-figs-2 { grid-template-columns: 1fr; }
+  .pub-figs-2 > .pub-thumb + .pub-thumb { margin-top: 10px; }
+  .pdf-frame { height: 62vh; min-height: 320px; }
+  .pdf-cover { max-height: 240px; }
   .edu-item { flex-direction: column; gap: 2px; }
   .edu-years { min-width: 0; }
   .nav-links { gap: 14px; }

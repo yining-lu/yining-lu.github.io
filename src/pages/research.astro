@@ -2,11 +2,23 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ResearchCard from '../components/ResearchCard.astro';
-import { Content as Publications } from '../../content/publications.md';
+import { site } from '../../site.config';
 
-const research = (await getCollection('research')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const all = await getCollection('research');
+
+// 按 site.config.ts 里 researchAreas 的顺序分组，空板块自动跳过
+const areas = site.researchAreas
+  .map((name) => ({
+    name,
+    items: all
+      .filter((e) => e.data.area === name)
+      .sort((a, b) => a.data.order - b.data.order),
+  }))
+  .filter((a) => a.items.length > 0);
+
+// 提醒：如果某篇论文的 area 拼错了，会在这里被捞出来
+const known = new Set(site.researchAreas);
+const orphans = all.filter((e) => !known.has(e.data.area));
 ---
 
 <Base title="Research" description="Research projects by Yining Lu.">
@@ -14,26 +26,48 @@ const research = (await getCollection('research')).sort(
     <div class="wrap">
       <p class="eyebrow">Research</p>
       <h1>Research</h1>
-      <p>Click any area to read the full description.</p>
+      <p>Two questions hold my work together.</p>
+      {
+        site.questions?.length > 0 && (
+          <div class="questions">
+            {site.questions.map((item) => (
+              <div class="question">
+                <p class="question-q">{item.q}</p>
+                <p class="question-a">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        )
+      }
     </div>
   </header>
 
-  <section>
-    <div class="wrap">
-      <h2>Research Areas</h2>
-      <p class="section-note">Click to expand</p>
-      {research.map((entry) => <ResearchCard entry={entry} />)}
-      {research.length === 0 && <p class="section-note">Coming soon.</p>}
-    </div>
-  </section>
+  {
+    areas.map((area) => (
+      <section class="area">
+        <div class="wrap">
+          <h2 class="area-title">{area.name}</h2>
+          {area.items.map((entry) => (
+            <ResearchCard entry={entry} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
 
-  <section id="publications">
-    <div class="wrap">
-      <h2>Publications &amp; Presentations</h2>
-      <p class="section-note">* denotes corresponding author</p>
-      <div class="pubs-md">
-        <Publications />
-      </div>
-    </div>
-  </section>
+  {
+    orphans.length > 0 && (
+      <section>
+        <div class="wrap">
+          <h2 class="area-title">Uncategorized</h2>
+          <p class="section-note">
+            These entries have an `area` that is not listed in site.config.ts
+          </p>
+          {orphans.map((entry) => (
+            <ResearchCard entry={entry} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 </Base>

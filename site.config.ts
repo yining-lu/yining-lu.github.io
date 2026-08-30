@@ -61,6 +61,29 @@ export const site = {
     { label: 'Contact', url: '/contact/' },
   ],
 
+  // Research 页的板块顺序。
+  // 这里的名字必须和 content/research/ 里每个 .md 的 area 字段完全一致。
+  // 想调整板块顺序，改这个列表的顺序即可。
+  // 某个板块下面没有任何论文时，该板块会自动隐藏。
+  researchAreas: [
+    'Family Communication',
+    'Children, Adolescents, and Media',
+    'Interpersonal Communication',
+    'Others',
+  ],
+
+  // Research 页顶部的两句研究总纲（来自你的 PPT）。不想要就把整个 questions 删掉
+  questions: [
+    {
+      q: 'Who is actually affected?',
+      a: 'The person affected may not be the person who used the media.',
+    },
+    {
+      q: 'Who is actually acting?',
+      a: 'Adolescents manage their connectivity rather than just receive it.',
+    },
+  ],
+
   // Contact 页面的内容
   contact: {
     photo: '/images/contact.jpg',
@@ -72,4 +95,12 @@ export const site = {
 
   // CV 的 PDF 文件位置（文件放在 public/ 下面）
   cvFile: '/cv.pdf',
+
+  // CV 第一页的预览图（放进 public/images/）。换了 CV 记得一起换；
+  // Mac 上可以用：qlmanage -t -s 1400 -o /tmp public/cv.pdf
+  // 不想要预览图就改成 ''
+  cvCover: '/images/cv-cover.jpg',
+
+  // CV 页数，显示在预览卡片上；不想显示就改成 0
+  cvPages: 3,
 };

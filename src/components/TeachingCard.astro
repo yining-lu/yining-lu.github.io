@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import PdfPreview from './PdfPreview.astro';
 
 interface Props {
   entry: CollectionEntry<'teaching'>;
@@ -11,6 +12,7 @@ const { Content } = await render(entry);
 const d = entry.data;
 
 const code = [d.code, d.role].filter(Boolean).join(' · ');
+const slides = d.slides;
 ---
 
 <div class="course">
@@ -20,4 +22,16 @@ const code = [d.code, d.role].filter(Boolean).join(' · ');
   <div class="prose">
     <Content />
   </div>
+
+  {
+    slides && (
+      <PdfPreview
+        file={slides.file}
+        label={slides.label ?? 'Slides'}
+        pages={slides.pages}
+        cover={slides.cover}
+        unit="slides"
+      />
+    )
+  }
 </div>

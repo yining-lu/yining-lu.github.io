@@ -1,0 +1,78 @@
+---
+// 可折叠的 PDF 预览卡片：折叠时显示封面缩略图，点开后在网页里直接翻 PDF。
+// Teaching 页的课件和 CV 页都用这一个组件。
+interface Props {
+  // PDF 路径，例如 "/cv.pdf" 或 "/slides/dyadic-data.pdf"
+  file: string;
+  // 卡片标题
+  label?: string;
+  // 页数，会显示成 "PDF · 31 pages"
+  pages?: number;
+  // 封面预览图路径，不传就不显示预览
+  cover?: string;
+  // 页数后面的单位，课件写 "slides"，文档写 "pages"
+  unit?: string;
+  // 是否默认展开
+  open?: boolean;
+}
+
+const {
+  file,
+  label = 'PDF',
+  pages,
+  cover,
+  unit = 'pages',
+  open = false,
+} = Astro.props;
+
+const meta = ['PDF', pages ? `${pages} ${unit}` : null].filter(Boolean).join(' · ');
+---
+
+<details class="pdf-card" open={open}>
+  <summary>
+    <span class="pdf-card-toggle">+</span>
+    <span class="pdf-card-head">
+      <span class="pdf-card-title">{label}</span>
+      <span class="pdf-card-meta">{meta}</span>
+      {
+        cover && (
+          <span class="pdf-cover-wrap">
+            <img
+              class="pdf-cover"
+              src={cover}
+              alt={`${label} — first page`}
+              loading="lazy"
+            />
+            <span class="pdf-cover-hint">Click to read inline →</span>
+          </span>
+        )
+      }
+    </span>
+  </summary>
+
+  <div class="pdf-card-body">
+    {/* 展开后才加载 PDF，避免首屏被几 MB 的文件拖慢 */}
+    <iframe class="pdf-frame" data-src={file} title={label} loading="lazy"></iframe>
+    {/* 部分手机浏览器不能内嵌 PDF，给一行小字兜底 */}
+    <p class="pdf-fallback">
+      Not loading? <a href={file} target="_blank" rel="noopener">Open the PDF directly ↗</a>
+    </p>
+  </div>
+</details>
+
+<script>
+  // 展开时才把 data-src 写进 src；默认展开的卡片在页面加载后立即填上。
+  const loadFrame = (el: HTMLDetailsElement) => {
+    const frame = el.querySelector<HTMLIFrameElement>('iframe[data-src]');
+    if (!frame) return;
+    frame.src = frame.dataset.src ?? '';
+    frame.removeAttribute('data-src');
+  };
+
+  document.querySelectorAll<HTMLDetailsElement>('details.pdf-card').forEach((el) => {
+    if (el.open) loadFrame(el);
+    el.addEventListener('toggle', () => {
+      if (el.open) loadFrame(el);
+    });
+  });
+</script>

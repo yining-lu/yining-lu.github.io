@@ -17,8 +17,9 @@ Astro 构建的静态个人主页，托管在 GitHub Pages。
 | 研究方向（增删改） | `content/research/` 里的 `.md` 文件 |
 | **论文 / 会议列表** | `content/publications.md` |
 | 教学经历（增删改） | `content/teaching/` 里的 `.md` 文件 |
+| **课件 / 讲座 PDF** | 把 PDF 放进 `public/slides/`，再在教学 `.md` 里写 `slides:` |
 | 换照片 | 把新图片放进 `public/images/`，覆盖同名文件 |
-| 换 CV | 用新的 PDF 覆盖 `public/cv.pdf` |
+| 换 CV | 用新的 PDF 覆盖 `public/cv.pdf`（封面图见下面“换 CV”）|
 
 每个文件开头都有中文注释说明怎么填。
 
@@ -57,6 +58,43 @@ links:
 - 期刊名用 `*期刊名*` 包起来会变紫色
 - 通讯作者星号写 `\*`（前面那个反斜杠不能省，否则会变成斜体）
 - 加链接写 `[DOI](https://...)`
+
+### 换 CV
+
+CV 页和 Teaching 页的课件用的是同一种卡片：折叠时只显示第一页缩略图，
+点一下就在网页里展开完整 PDF（带翻页、缩放、下载）。
+
+1. 用新的 PDF 覆盖 `public/cv.pdf`
+2. 重新生成封面图（Mac 上直接在项目目录跑这两行）：
+
+```bash
+qlmanage -t -s 1400 -o /tmp public/cv.pdf
+sips -Z 1000 -s format jpeg -s formatOptions 68 /tmp/cv.pdf.png --out public/images/cv-cover.jpg
+```
+
+3. 如果页数变了，去 `site.config.ts` 把 `cvPages` 改成新页数
+
+> 不想要封面图就把 `site.config.ts` 里的 `cvCover` 改成 `''`，卡片会变成一行标题。
+
+### 给一门课挂课件 PDF
+
+1. 把 PDF 放进 `public/slides/`，文件名用英文、不要空格（例如 `dyadic-data.pdf`）
+2. 打开对应的 `content/teaching/*.md`，在 `---` 之间加上：
+
+```markdown
+slides:
+  file: "/slides/dyadic-data.pdf"     # 必填，注意开头的斜杠
+  label: "Workshop Slides — Dyadic Data"  # 按钮上显示的名字，可省略
+  pages: 31                            # 页数，可省略
+  cover: "/images/slides-dyadic-data.jpg"  # 封面预览图，可省略
+```
+
+页面上会出现一张可展开的卡片：折叠时显示封面缩略图，点开后直接在网页里翻 PDF，
+下面还有 “Open in new tab” 和 “Download PDF” 两个按钮。PDF 只有点开才加载，不会拖慢页面。
+
+> 封面图可以用 Mac 自带命令生成：
+> `qlmanage -t -s 1600 -o /tmp public/slides/dyadic-data.pdf`，
+> 再把 `/tmp` 里的图片压成 jpg 放进 `public/images/`。
 
 ### 删掉一个板块
 

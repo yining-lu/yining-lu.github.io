@@ -8,8 +8,12 @@ import { site } from '../../site.config';
 // About 正文直接来自 content/about.md
 import { Content as AboutText } from '../../content/about.md';
 
-const research = (await getCollection('research')).sort(
-  (a, b) => a.data.order - b.data.order
+// 首页按 site.config.ts 里的板块顺序排列，同一板块内再按 order
+const allResearch = await getCollection('research');
+const research = site.researchAreas.flatMap((name) =>
+  allResearch
+    .filter((e) => e.data.area === name)
+    .sort((a, b) => a.data.order - b.data.order)
 );
 const teaching = (await getCollection('teaching')).sort(
   (a, b) => a.data.order - b.data.order

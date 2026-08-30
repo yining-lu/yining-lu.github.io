@@ -9,30 +9,25 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
-
-// 拼装 "作者 · 期刊 · 年份" 这行小字，缺哪项就自动跳过
-const meta = [d.authors, d.venue, d.year].filter(Boolean);
 ---
 
 <details class="pub">
   <summary>
     <span class="pub-toggle">+</span>
-    <span>
+    <span class="pub-head">
       <span class="pub-title">{d.title}</span>
+      {d.status && <span class="pub-status">{d.status}</span>}
+      {d.citation && <span class="pub-meta">{d.citation}</span>}
+      <span class="pub-preview">{d.summary}</span>
       {
-        meta.length > 0 && (
-          <span class="pub-meta">
-            {meta.map((part, i) => (
-              <>
-                {i > 0 && ' · '}
-                {part === d.venue ? <span class="venue">{part}</span> : part}
-              </>
+        d.images.length > 0 && (
+          <span class={d.images.length > 1 ? 'pub-figs pub-figs-2' : 'pub-figs'}>
+            {d.images.map((src) => (
+              <img class="pub-thumb" src={src} alt={d.title} loading="lazy" />
             ))}
           </span>
         )
       }
-      <span class="pub-preview">{d.summary}</span>
-      {d.image && <img class="pub-thumb" src={d.image} alt={d.title} loading="lazy" />}
     </span>
   </summary>
 

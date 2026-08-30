@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import PdfPreview from '../components/PdfPreview.astro';
 import { site } from '../../site.config';
 ---
 
@@ -16,13 +17,13 @@ import { site } from '../../site.config';
 
   <section>
     <div class="wrap">
-      <!-- 手机浏览器大多不支持内嵌 PDF，所以下面给了下载链接兜底 -->
-      <object class="pdf-frame" data={site.cvFile} type="application/pdf">
-        <p class="pdf-fallback">
-          Your browser cannot display PDFs inline.
-          <a href={site.cvFile}>Download the CV here</a>.
-        </p>
-      </object>
+      <!-- 折叠时只显示第一页缩略图，点开后才加载完整 PDF -->
+      <PdfPreview
+        file={site.cvFile}
+        label={`${site.name} — Curriculum Vitae`}
+        pages={site.cvPages}
+        cover={site.cvCover}
+      />
     </div>
   </section>
 </Base>
