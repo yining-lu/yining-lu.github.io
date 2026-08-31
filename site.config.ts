@@ -70,15 +70,15 @@ export const site = {
     'Others',
   ],
 
-  // Research 页顶部的两句研究总纲（来自你的 PPT）。不想要就把整个 questions 删掉
+  // Research 页顶部的两句研究总纲。不想要就把整个 questions 删掉
   questions: [
     {
-      q: 'Who is actually affected?',
-      a: 'The person affected may not be the person who used the media.',
+      q: 'How do digital technologies reshape relationships and well-being?',
+      a: 'I trace how one person’s media use can ripple through families and peer relationships, shaping communication, closeness, and well-being.',
     },
     {
-      q: 'Who is actually acting?',
-      a: 'Adolescents manage their connectivity rather than just receive it.',
+      q: 'How do people actively navigate digital life?',
+      a: 'I examine how people connect, disconnect, intervene, and adapt as they engage with digital technologies in everyday life.',
     },
   ],
 
